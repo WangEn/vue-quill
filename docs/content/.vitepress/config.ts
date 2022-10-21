@@ -1,9 +1,7 @@
-// @ts-check
+import 'dotenv/config'
+import { defineConfig } from 'vitepress'
 
-/**
- * @type {import('vitepress').UserConfig}
- */
-module.exports = {
+export default defineConfig({
   base: '/vue-quill/',
   lang: 'en-US',
   title: 'VueQuill',
@@ -15,16 +13,18 @@ module.exports = {
     ],
   ],
   themeConfig: {
-    repo: 'vueup/vue-quill',
     logo: '/logo.svg',
-    docsDir: 'docs/content',
-    docsBranch: 'beta',
-    editLinks: true,
-    editLinkText: 'Suggest changes to this page',
+    editLink: {
+      pattern:
+        'https://github.com/vueup/vue-quill/edit/beta/docs/content/:path',
+      text: 'Edit this page on GitHub',
+    },
 
     algolia: {
-      apiKey: '05a276b73b9dd064f0788b9669751f46',
+      appId: process.env.ALGOLIA_APP_ID as string,
+      apiKey: process.env.ALGOLIA_SEARCH_KEY as string,
       indexName: 'vue-quill',
+      searchParameters: {},
     },
 
     // carbonAds: {
@@ -32,11 +32,15 @@ module.exports = {
     //   placement: 'vuequilldev'
     // },
 
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright:
+        'Copyright © 2020-present Luthfi Masruri & VueQuill Contributors',
+    },
+
     nav: [
       { text: 'Guide', link: '/guide/' },
       { text: 'API Reference', link: '/api/' },
-      // { text: 'Config', link: '/config/' },
-      // { text: 'Plugins', link: '/plugins/' },
       {
         text: 'Support VueQuill',
         items: [
@@ -53,13 +57,13 @@ module.exports = {
     ],
 
     sidebar: {
-      '/config/': 'auto',
-      '/plugins': 'auto',
+      // '/config/': 'auto',
+      // '/plugins': 'auto',
       // catch-all fallback
       '/': [
         {
           text: 'Guide',
-          children: [
+          items: [
             {
               text: 'Introduction',
               link: '/guide/',
@@ -92,7 +96,7 @@ module.exports = {
         },
         {
           text: 'APIs',
-          children: [
+          items: [
             {
               text: 'Props',
               link: '/api/',
@@ -118,4 +122,4 @@ module.exports = {
       ],
     },
   },
-}
+})
